@@ -46,7 +46,8 @@ function createOffer() {
 }
 
 const SIMILAR_HOTEL_COUNT = 2;
+
 const similarHotels = () => Array.from({ length: SIMILAR_HOTEL_COUNT }, createOffer);
-const similarAvatars = () => Array.from({ length: SIMILAR_HOTEL_COUNT }, createAuthor);
+const similarAvatars = () => Array.from({ length: 1 }, createAuthor);
 
 export { similarHotels, similarAvatars }

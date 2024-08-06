@@ -9,7 +9,7 @@ const avatars = similarAvatars();
 similarOffers.forEach((offer) => {
   const card = cardTemplate.cloneNode(true);
   card.querySelector('.popup__title').textContent = offer.title;
-  card.querySelector('.popup__text--address').textContent = offer.address;
+  card.querySelector('.popup__text--address').textContent = `lat: ${offer.address.lat} и lng:${offer.address.lng}`;
   card.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
 
   switch (offer.type) {
