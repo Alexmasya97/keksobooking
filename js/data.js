@@ -1,3 +1,5 @@
+import { randomNumber, getRandomFloat, getRandomArrayElement, generateRandomElementsArray } from './util.js'
+
 function createAuthor() {
   const randomNumber = Math.floor(Math.random() * 10) + 1; // генерируем случайное число от 1 до 10
   const formattedNumber = String(randomNumber).padStart(2, '0');
@@ -43,8 +45,8 @@ function createOffer() {
   };
 }
 
-const SIMILAR_HOTEL_COUNT = 10;
-const similarHotels = new Array(SIMILAR_HOTEL_COUNT).fill(null).map(() => createOffer());
-const offer = createOffer();
-const author = createAuthor()
-export {createAuthor,createOffer};
+const SIMILAR_HOTEL_COUNT = 2;
+const similarHotels = () => Array.from({ length: SIMILAR_HOTEL_COUNT }, createOffer);
+const similarAvatars = () => Array.from({ length: SIMILAR_HOTEL_COUNT }, createAuthor);
+
+export { similarHotels, similarAvatars }
