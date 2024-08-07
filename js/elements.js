@@ -35,13 +35,12 @@ similarOffers.forEach((offer) => {
 
   // Добавление списка удобств
   const featuresContainer = card.querySelector('.popup__features');
-  const featureList = card.querySelectorAll('.popup__feature');
   featuresContainer.innerHTML = '';
 
   offer.features.forEach((feature) => {
     const featureListItem = document.createElement('li');
     featureListItem.classList.add('popup__feature');
-    featureListItem.classList.add('popup__feature--' + feature);
+    featureListItem.classList.add(`popup__feature--${  feature}`);
     featuresContainer.appendChild(featureListItem);
   });
 
@@ -59,11 +58,11 @@ similarOffers.forEach((offer) => {
     photoItem.width = 45;
     photoItem.height = 40;
     photosList.appendChild(photoItem);
-  })
+  });
 
   // Замена аватарки пользователя
   const avatar = card.querySelector('.popup__avatar');
-  avatar.src = avatars
+  avatar.src = avatars;
 
   // Проверка наличия описания
   if (offer.description) {
