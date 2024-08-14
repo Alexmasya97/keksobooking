@@ -42,4 +42,9 @@ function generateRandomElementsArray(possibleValues) {
   return Array.from(chosenElements);
 }
 
-export {randomNumber,getRandomFloat,getRandomArrayElement,generateRandomElementsArray};
+export {
+  randomNumber,
+  getRandomFloat,
+  getRandomArrayElement,
+  generateRandomElementsArray
+};

@@ -1,7 +1,12 @@
-import { randomNumber, getRandomFloat, getRandomArrayElement, generateRandomElementsArray } from './util.js';
+import {
+  randomNumber,
+  getRandomFloat,
+  getRandomArrayElement,
+  generateRandomElementsArray
+} from './util.js';
 
-function createAuthor() {
-  const formattedNumber = String(randomNumber(1,10)).padStart(2, '0');
+function getAvatarLink() {
+  const formattedNumber = String(randomNumber(1, 10)).padStart(2, '0');
   const avatar = `img/avatars/user${formattedNumber}.png`; // создаем уникальный адрес изображения
   return avatar;
 }
@@ -45,8 +50,10 @@ function createOffer() {
 }
 
 const SIMILAR_HOTEL_COUNT = 10;
-
-const similarHotels = () => Array.from({ length: SIMILAR_HOTEL_COUNT }, createOffer);
-const similarAvatars = () => Array.from({ length: 1 }, createAuthor);
-
-export { similarHotels, similarAvatars };
+const generateObject = () => {
+  return {
+    author: { avatar: getAvatarLink() },
+    offer: createOffer()
+  }
+}
+export { generateObject };
