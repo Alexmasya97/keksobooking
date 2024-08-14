@@ -1,16 +1,22 @@
-function createAuthor() {
-  const randomNumber = Math.floor(Math.random() * 10) + 1; // генерируем случайное число от 1 до 10
-  const formattedNumber = String(randomNumber).padStart(2, '0');
+import {
+  randomNumber,
+  getRandomFloat,
+  getRandomArrayElement,
+  generateRandomElementsArray
+} from './util.js';
+
+function getAvatarLink() {
+  const formattedNumber = String(randomNumber(1, 10)).padStart(2, '0');
   const avatar = `img/avatars/user${formattedNumber}.png`; // создаем уникальный адрес изображения
   return avatar;
 }
 
 function createOffer() {
 
-  let location = {
+  const location = {
     lat: getRandomFloat(35.65000, 35.70000, 5),
     lng: getRandomFloat(139.70000, 139.80000, 5),
-  }
+  };
 
   return {
     title: getRandomArrayElement([
@@ -43,8 +49,12 @@ function createOffer() {
   };
 }
 
-const SIMILAR_HOTEL_COUNT = 10;
-const similarHotels = new Array(SIMILAR_HOTEL_COUNT).fill(null).map(() => createOffer());
-const offer = createOffer();
-const author = createAuthor()
-export {createAuthor,createOffer};
+const generateObject = () => {
+  const { author, offer } = {
+    author: { avatar: getAvatarLink() },
+    offer: createOffer()
+  };
+  return { author, offer };
+};
+
+export { generateObject };
