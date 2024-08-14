@@ -49,11 +49,8 @@ function createOffer() {
   };
 }
 
-const SIMILAR_HOTEL_COUNT = 10;
-const generateObject = () => {
-  return {
-    author: { avatar: getAvatarLink() },
-    offer: createOffer()
-  }
-}
+const generateObject = () => ({
+  author: { avatar: getAvatarLink() },
+  offer: createOffer()
+});
 export { generateObject };
