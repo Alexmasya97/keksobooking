@@ -49,8 +49,12 @@ function createOffer() {
   };
 }
 
-const generateObject = () => ({
-  author: { avatar: getAvatarLink() },
-  offer: createOffer()
-});
+const generateObject = () => {
+  const { author, offer } = {
+    author: { avatar: getAvatarLink() },
+    offer: createOffer()
+  };
+  return { author, offer };
+};
+
 export { generateObject };
