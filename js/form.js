@@ -6,10 +6,10 @@ const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
 
 const diactivateForm = () => {
   adForm.classList.add('ad-form--disabled');
-  mapFiltersForm.classList.add('ad-form--disabled');
-  mapFiltersFormFeatures.setAttribute('disabled', 'disabled');
+  mapFiltersForm.classList.add('.map__filters--disabled');
+  mapFiltersFormFeatures.setAttribute('disabled', '');
   const inactiveState = (elements) => {
-    elements.forEach((item) => item.setAttribute('disabled', 'disabled'));
+    elements.forEach((item) => item.setAttribute('disabled', ''));
   };
 
   inactiveState(adFormElements);
@@ -19,10 +19,10 @@ const diactivateForm = () => {
 const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
   mapFiltersForm.classList.remove('ad-form--disabled');
-  mapFiltersFormFeatures.removeAttribute('disabled', null);
+  mapFiltersFormFeatures.removeAttribute('disabled');
 
   const activeState = (elements) => {
-    elements.forEach((item) => item.removeAttribute('disabled', 'disabled'));
+    elements.forEach((item) => item.removeAttribute('disabled'));
   };
 
   activeState(adFormElements);
