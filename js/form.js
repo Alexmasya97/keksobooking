@@ -9,7 +9,7 @@ const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
-}, false);
+});
 
 //Валидация заголовка
 
@@ -22,16 +22,61 @@ pristine.addValidator(
   validateTitle,
   'От 30 до 100 символов');
 
-// Валидация цены за ночь
+//Тип жилья
+const minPrice = adForm.querySelector('#price');
+minPrice.setAttribute('max', '100000');
+const type = adForm.querySelector('[name="type"]');
 
 function validatePrice(value) {
-  return value <= 100000;
+
+  const selectedType = type.value;
+
+  switch (selectedType) {
+    case 'bungalow':
+      minPrice.setAttribute('min', '0');
+      minPrice.setAttribute('placeholder', '0');
+      break;
+    case 'flat':
+      minPrice.setAttribute('min', '1000');
+      minPrice.setAttribute('placeholder', '1000');
+      break;
+    case 'hotel':
+      minPrice.setAttribute('min', '3000');
+      minPrice.setAttribute('placeholder', '3000');
+      break;
+    case 'house':
+      minPrice.setAttribute('min', '5000');
+      minPrice.setAttribute('placeholder', '5000');
+      break;
+    case 'palace':
+      minPrice.setAttribute('min', '10000');
+      minPrice.setAttribute('placeholder', '10000');
+      break;
+  }
+  return Number(value) >= Number(minPrice.getAttribute('min')) && Number(value) < 100000;
+}
+
+function priceErrorMessage(value) {
+  let text;
+
+  if (value > 100000) {
+    text = 'Максимальная цена за ночь 100 000';
+  } else if (value < minPrice.getAttribute('min')) {
+    text = `Минимальная цена за ночь ${minPrice.getAttribute('min')}`;
+  }
+  return text;
 }
 
 pristine.addValidator(
-  adForm.querySelector('#price'),
+  minPrice,
   validatePrice,
-  'Максимальное значение — 100 000'
+  priceErrorMessage
+);
+
+pristine.addValidator(
+  type,
+  validatePrice,
+  priceErrorMessage
 );
 
 //Количество комнат и гостей
@@ -42,7 +87,7 @@ const roomOption = {
   ['1']: ['1'],
   ['2']: ['1', '2'],
   ['3']: ['1', '2', '3'],
-  ['100']: ['не для гостей']
+  ['100']: ['0']
 };
 
 function roomCapacityRule() {
@@ -51,13 +96,26 @@ function roomCapacityRule() {
 
 function getRuleErrorMessage() {
   if (!roomCapacityRule()) {
-    const text = 'Выберите больше комнат';
-    return text;
+    return roomAmount.value === '100' ? 'выберите "не для гостей"' : 'выберите больше комнат';
   }
 }
 
 pristine.addValidator(roomAmount, roomCapacityRule, getRuleErrorMessage);
-pristine.addValidator(capacityAmount, roomCapacityRule);
+pristine.addValidator(capacityAmount, roomCapacityRule,);
+
+// Поля check-in n check-out
+
+const checkIn = adForm.querySelector('#timein');
+const checkOut = adForm.querySelector('#timeout');
+
+checkIn.addEventListener('change', () => {
+  checkOut.value = checkIn.value;
+});
+
+checkOut.addEventListener('change', () => {
+  checkIn.value = checkOut.value;
+});
+
 
 adForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
