@@ -1,3 +1,4 @@
+
 import {
   MAX_ACCOMODATION_PRICE,
   TYPES_ROOM,
@@ -9,6 +10,7 @@ const adFormElements = document.querySelectorAll('.ad-form__element');
 const mapFiltersForm = document.querySelector('.map__filters');
 const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
+
 
 //Pristine
 
