@@ -1,8 +1,19 @@
-const adForm = document.querySelector('.ad-form');
-const adFormElements = document.querySelectorAll('.ad-form__element');
-const mapFiltersForm = document.querySelector('.map__filters');
-const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
-const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
+import {
+  adForm,
+  adFormElements,
+  mapFiltersForm,
+  mapFiltersFormElements,
+  mapFiltersFormFeatures,
+  type,
+  MAX_ACCOMODATION_PRICE,
+  TYPES_ROOM,
+  minPrice,
+  roomAmount,
+  capacityAmount,
+  roomOption,
+  checkIn,
+  checkOut
+} from './constant.js';
 
 //Pristine
 
@@ -23,48 +34,24 @@ pristine.addValidator(
   'От 30 до 100 символов');
 
 //Тип жилья
-const minPrice = adForm.querySelector('#price');
-minPrice.setAttribute('max', '100000');
-const type = adForm.querySelector('[name="type"]');
+
+type.addEventListener('change', ({ target }) => {
+  minPrice.setAttribute('min', TYPES_ROOM[target.value].minPrice);
+  minPrice.setAttribute('placeholder', TYPES_ROOM[target.value].minPrice);
+});
 
 function validatePrice(value) {
-
-  const selectedType = type.value;
-
-  switch (selectedType) {
-    case 'bungalow':
-      minPrice.setAttribute('min', '0');
-      minPrice.setAttribute('placeholder', '0');
-      break;
-    case 'flat':
-      minPrice.setAttribute('min', '1000');
-      minPrice.setAttribute('placeholder', '1000');
-      break;
-    case 'hotel':
-      minPrice.setAttribute('min', '3000');
-      minPrice.setAttribute('placeholder', '3000');
-      break;
-    case 'house':
-      minPrice.setAttribute('min', '5000');
-      minPrice.setAttribute('placeholder', '5000');
-      break;
-    case 'palace':
-      minPrice.setAttribute('min', '10000');
-      minPrice.setAttribute('placeholder', '10000');
-      break;
-  }
-  return Number(value) >= Number(minPrice.getAttribute('min')) && Number(value) < 100000;
+  minPrice.setAttribute('max', MAX_ACCOMODATION_PRICE);
+  return value >= Number(minPrice.getAttribute('min')) && value <= Number(minPrice.getAttribute('max'));
 }
 
 function priceErrorMessage(value) {
-  let text;
 
   if (value > 100000) {
-    text = 'Максимальная цена за ночь 100 000';
+    return `Максимальная цена за ночь ${MAX_ACCOMODATION_PRICE}`;
   } else if (value < minPrice.getAttribute('min')) {
-    text = `Минимальная цена за ночь ${minPrice.getAttribute('min')}`;
+    return `Минимальная цена за ночь ${minPrice.getAttribute('min')}`;
   }
-  return text;
 }
 
 pristine.addValidator(
@@ -73,22 +60,7 @@ pristine.addValidator(
   priceErrorMessage
 );
 
-pristine.addValidator(
-  type,
-  validatePrice,
-  priceErrorMessage
-);
-
 //Количество комнат и гостей
-
-const roomAmount = adForm.querySelector('#room_number');
-const capacityAmount = adForm.querySelector('#capacity');
-const roomOption = {
-  ['1']: ['1'],
-  ['2']: ['1', '2'],
-  ['3']: ['1', '2', '3'],
-  ['100']: ['0']
-};
 
 function roomCapacityRule() {
   return roomOption[roomAmount.value].includes(capacityAmount.value);
@@ -96,7 +68,11 @@ function roomCapacityRule() {
 
 function getRuleErrorMessage() {
   if (!roomCapacityRule()) {
-    return roomAmount.value === '100' ? 'выберите "не для гостей"' : 'выберите больше комнат';
+    if (roomAmount.value === '100') {
+      return 'выберите "не для гостей"';
+    } else {
+      return 'выберите больше комнат';
+    }
   }
 }
 
@@ -105,9 +81,6 @@ pristine.addValidator(capacityAmount, roomCapacityRule,);
 
 // Поля check-in n check-out
 
-const checkIn = adForm.querySelector('#timein');
-const checkOut = adForm.querySelector('#timeout');
-
 checkIn.addEventListener('change', () => {
   checkOut.value = checkIn.value;
 });
@@ -115,7 +88,6 @@ checkIn.addEventListener('change', () => {
 checkOut.addEventListener('change', () => {
   checkIn.value = checkOut.value;
 });
-
 
 adForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
