@@ -36,7 +36,6 @@ minPrice.setAttribute('max', MAX_ACCOMODATION_PRICE);
 minPrice.setAttribute('min', '1000');
 
 type.addEventListener('change', ({ target }) => {
-  minPrice.removeAttribute('min')
   minPrice.setAttribute('min', TYPES_ROOM[target.value].minPrice);
   minPrice.setAttribute('placeholder', TYPES_ROOM[target.value].minPrice);
 });
