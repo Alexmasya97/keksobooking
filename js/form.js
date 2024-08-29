@@ -1,19 +1,14 @@
 import {
-  adForm,
-  adFormElements,
-  mapFiltersForm,
-  mapFiltersFormElements,
-  mapFiltersFormFeatures,
-  type,
   MAX_ACCOMODATION_PRICE,
   TYPES_ROOM,
-  minPrice,
-  roomAmount,
-  capacityAmount,
-  roomOption,
-  checkIn,
-  checkOut
+  ROOM_OPTION
 } from './constant.js';
+
+const adForm = document.querySelector('.ad-form');
+const adFormElements = document.querySelectorAll('.ad-form__element');
+const mapFiltersForm = document.querySelector('.map__filters');
+const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
+const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
 
 //Pristine
 
@@ -35,14 +30,17 @@ pristine.addValidator(
 
 //Тип жилья
 
+const type = adForm.querySelector('[name="type"]');
+const minPrice = adForm.querySelector('#price');
+minPrice.setAttribute('max', MAX_ACCOMODATION_PRICE);
+
 type.addEventListener('change', ({ target }) => {
   minPrice.setAttribute('min', TYPES_ROOM[target.value].minPrice);
   minPrice.setAttribute('placeholder', TYPES_ROOM[target.value].minPrice);
 });
 
 function validatePrice(value) {
-  minPrice.setAttribute('max', MAX_ACCOMODATION_PRICE);
-  return value >= Number(minPrice.getAttribute('min')) && value <= Number(minPrice.getAttribute('max'));
+  return value >= Number(minPrice.getAttribute('min')) && value <= MAX_ACCOMODATION_PRICE;
 }
 
 function priceErrorMessage(value) {
@@ -62,8 +60,11 @@ pristine.addValidator(
 
 //Количество комнат и гостей
 
+const roomAmount = adForm.querySelector('#room_number');
+const capacityAmount = adForm.querySelector('#capacity');
+
 function roomCapacityRule() {
-  return roomOption[roomAmount.value].includes(capacityAmount.value);
+  return ROOM_OPTION[roomAmount.value].includes(capacityAmount.value);
 }
 
 function getRuleErrorMessage() {
@@ -80,6 +81,9 @@ pristine.addValidator(roomAmount, roomCapacityRule, getRuleErrorMessage);
 pristine.addValidator(capacityAmount, roomCapacityRule,);
 
 // Поля check-in n check-out
+
+const checkIn = adForm.querySelector('#timein');
+const checkOut = adForm.querySelector('#timeout');
 
 checkIn.addEventListener('change', () => {
   checkOut.value = checkIn.value;
