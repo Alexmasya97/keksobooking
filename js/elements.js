@@ -72,6 +72,6 @@ offers.forEach(({ offer, author }) => {
     descriptionBlock.style.display = 'none';
   }
 
-  mapCanvas.appendChild(card);
+  //mapCanvas.appendChild(card);
 });
 

@@ -12,6 +12,8 @@ function getAvatarLink() {
 }
 
 function createOffer() {
+  const lat = getRandomFloat(35.65, 35.7, 5);
+  const lng = getRandomFloat(139.7, 139.8, 5);
 
   const location = {
     lat: getRandomFloat(35.65000, 35.70000, 5),
@@ -26,7 +28,7 @@ function createOffer() {
       'Sun and Sand Hotel',
       'Dream Desert Hotel',
     ]),
-    address: location,
+    address: `${lat}, ${lng}`,
     price: randomNumber(100, 1000),
     type: getRandomArrayElement(['palace', 'flat', 'house', 'bungalow', 'hotel',]),
     rooms: Math.floor(Math.random() * 5) + 1,
@@ -57,4 +59,5 @@ const generateObject = () => {
   return { author, offer };
 };
 
-export { generateObject };
+export { generateObject, createOffer };
+
