@@ -12,8 +12,6 @@ function getAvatarLink() {
 }
 
 function createOffer() {
-  const lat = getRandomFloat(35.65, 35.7, 5);
-  const lng = getRandomFloat(139.7, 139.8, 5);
 
   const location = {
     lat: getRandomFloat(35.65000, 35.70000, 5),
@@ -22,13 +20,18 @@ function createOffer() {
 
   return {
     title: getRandomArrayElement([
-      'Wonderful house with a view',
-      'SleepyCrew Hub',
-      'Walkabout Beach Hotel',
-      'Sun and Sand Hotel',
-      'Dream Desert Hotel',
+      'Tokyo Neon Oasis Hotel',
+      'Samurai Suites',
+      'Zen Garden Inn',
+      'Electric Dream Hotel',
+      'Sushi Skyline Retreat',
+      'Geisha Glamour Hotel',
+      'Samurai apartment',
+      'Osaka',
+      'Kabuki Komfort Inn.',
+      'Tokyo Tango Tower'
     ]),
-    address: `${lat}, ${lng}`,
+    address: location,
     price: randomNumber(100, 1000),
     type: getRandomArrayElement(['palace', 'flat', 'house', 'bungalow', 'hotel',]),
     rooms: Math.floor(Math.random() * 5) + 1,
@@ -59,5 +62,5 @@ const generateObject = () => {
   return { author, offer };
 };
 
-export { generateObject, createOffer };
+export { generateObject, createOffer, getAvatarLink };
 
