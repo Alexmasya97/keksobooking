@@ -10,6 +10,7 @@ const adFormElements = document.querySelectorAll('.ad-form__element');
 const mapFiltersForm = document.querySelector('.map__filters');
 const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
+const addressInput = adForm.querySelector('#address');
 
 
 //Pristine
@@ -43,15 +44,13 @@ type.addEventListener('change', ({ target }) => {
 });
 
 function validatePrice(value) {
- return value >= Number(minPrice.getAttribute('min')) && value <= MAX_ACCOMODATION_PRICE;
+  return value >= Number(minPrice.getAttribute('min')) && value <= MAX_ACCOMODATION_PRICE;
 }
 
 function priceErrorMessage(value) {
 
-  if (value > 100000) {
-    return `Максимальная цена за ночь ${MAX_ACCOMODATION_PRICE}`;
-  } else if (value < minPrice.getAttribute('min')) {
-    return `Минимальная цена за ночь ${minPrice.getAttribute('min')}`;
+  if (value < minPrice.getAttribute('min')) {
+    return `Выберите число между ${minPrice.getAttribute('min')} и ${MAX_ACCOMODATION_PRICE}`;
   }
 }
 
@@ -129,5 +128,6 @@ const activateForm = () => {
 
 export {
   diactivateForm,
-  activateForm
+  activateForm,
+  addressInput
 };

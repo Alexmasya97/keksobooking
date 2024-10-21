@@ -20,11 +20,16 @@ function createOffer() {
 
   return {
     title: getRandomArrayElement([
-      'Wonderful house with a view',
-      'SleepyCrew Hub',
-      'Walkabout Beach Hotel',
-      'Sun and Sand Hotel',
-      'Dream Desert Hotel',
+      'Tokyo Neon Oasis Hotel',
+      'Samurai Suites',
+      'Zen Garden Inn',
+      'Electric Dream Hotel',
+      'Sushi Skyline Retreat',
+      'Geisha Glamour Hotel',
+      'Samurai apartment',
+      'Osaka',
+      'Kabuki Komfort Inn.',
+      'Tokyo Tango Tower'
     ]),
     address: location,
     price: randomNumber(100, 1000),
@@ -57,4 +62,5 @@ const generateObject = () => {
   return { author, offer };
 };
 
-export { generateObject };
+export { generateObject, createOffer, getAvatarLink };
+

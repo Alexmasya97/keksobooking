@@ -1,6 +1,5 @@
 import { generateObject } from './data.js';
 
-const mapCanvas = document.querySelector('.map__canvas');
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const OFFERS_COUNT = 10;
@@ -72,6 +71,7 @@ offers.forEach(({ offer, author }) => {
     descriptionBlock.style.display = 'none';
   }
 
-  mapCanvas.appendChild(card);
+  //mapCanvas.appendChild(card);
 });
 
+export { offers };
