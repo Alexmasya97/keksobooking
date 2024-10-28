@@ -61,6 +61,6 @@ const generateObject = () => {
   };
   return { author, offer };
 };
-console.log(generateObject)
+
 export { generateObject };
 

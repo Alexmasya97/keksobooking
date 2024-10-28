@@ -58,10 +58,10 @@ offers.forEach(({ offer }) => {
     lat,
     lng,
   },
-    {
-      draggable: false,
-      icon: pinIcon,
-    },
+  {
+    draggable: false,
+    icon: pinIcon,
+  },
   );
 
   marker
