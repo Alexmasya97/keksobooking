@@ -1,10 +1,9 @@
-import './util.js';
-import { createOffer, getAvatarLink } from './data.js';
+import { createCustomPopup } from './util.js';
+import './data.js';
 import { offers } from './elements.js';
 import './constant.js';
 import { diactivateForm, activateForm, addressInput } from './form.js';
 import './price-slider.js';
-
 
 diactivateForm();
 const map = L.map('map-canvas')
@@ -47,19 +46,6 @@ mainPinMarker.on('moveend', (evt) => {
   addressInput.value = `${latValue}, ${lngValue}`;
 });
 
-const createCustomPopup = () => {
-  const balloonTemplate = document.querySelector('#card').content.querySelector('.popup');
-  const popupElement = balloonTemplate.cloneNode(true);
-  const offer = createOffer();
-  popupElement.querySelector('.popup__title').textContent = offer.title;
-  popupElement.querySelector('.popup__text--address').textContent = `lat: ${offer.address.lat} и lng:${offer.address.lng}`;
-  popupElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-  const avatar = getAvatarLink();
-  popupElement.querySelector('.popup__avatar').src = avatar;
-  return popupElement;
-};
-
-
 offers.forEach(({ offer }) => {
   const { lat, lng } = offer.address;
   const pinIcon = L.icon({
@@ -72,14 +58,14 @@ offers.forEach(({ offer }) => {
     lat,
     lng,
   },
-  {
-    draggable: true,
-    icon: pinIcon,
-  },
+    {
+      draggable: false,
+      icon: pinIcon,
+    },
   );
 
   marker
     .addTo(map)
-    .bindPopup(createCustomPopup(createOffer));
+    .bindPopup(createCustomPopup(offer));
 });
 

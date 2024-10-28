@@ -61,6 +61,6 @@ const generateObject = () => {
   };
   return { author, offer };
 };
-
-export { generateObject, createOffer, getAvatarLink };
+console.log(generateObject)
+export { generateObject };
 

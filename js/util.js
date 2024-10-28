@@ -42,9 +42,21 @@ function generateRandomElementsArray(possibleValues) {
   return Array.from(chosenElements);
 }
 
+const createCustomPopup = (offer) => {
+  const balloonTemplate = document.querySelector('#card').content.querySelector('.popup');
+  const popupElement = balloonTemplate.cloneNode(true);
+  popupElement.querySelector('.popup__title').textContent = offer.title;
+  popupElement.querySelector('.popup__text--address').textContent = `lat: ${offer.address.lat} и lng:${offer.address.lng}`;
+  popupElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
+  popupElement.querySelector('.popup__avatar').src = avatar;
+
+  return popupElement;
+};
+
 export {
   randomNumber,
   getRandomFloat,
   getRandomArrayElement,
-  generateRandomElementsArray
+  generateRandomElementsArray,
+  createCustomPopup,
 };
