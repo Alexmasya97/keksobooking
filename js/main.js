@@ -46,7 +46,7 @@ mainPinMarker.on('moveend', (evt) => {
   addressInput.value = `${latValue}, ${lngValue}`;
 });
 
-offers.forEach(({ offer }) => {
+offers.forEach(({ offer, author }) => {
   const { lat, lng } = offer.address;
   const pinIcon = L.icon({
     iconUrl: '../img/avatars/pin.svg',
@@ -66,6 +66,6 @@ offers.forEach(({ offer }) => {
 
   marker
     .addTo(map)
-    .bindPopup(createCustomPopup(offer));
+    .bindPopup(createCustomPopup({ offer, author }));
 });
 

@@ -70,8 +70,6 @@ offers.forEach(({ offer, author }) => {
     const descriptionBlock = card.querySelector('.popup__description');
     descriptionBlock.style.display = 'none';
   }
-
-  //mapCanvas.appendChild(card);
 });
 
 export { offers };
