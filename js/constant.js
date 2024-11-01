@@ -1,4 +1,5 @@
 const MAX_ACCOMODATION_PRICE = 100000;
+const DEFAULT_MIN_PRICE = 1000;
 const TYPES_ROOM = {
   bungalow: {
     minPrice: 0,
@@ -26,6 +27,7 @@ const ROOM_OPTION = {
 
 export {
   MAX_ACCOMODATION_PRICE,
+  DEFAULT_MIN_PRICE,
   TYPES_ROOM,
   ROOM_OPTION
 };

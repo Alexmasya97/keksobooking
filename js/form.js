@@ -12,7 +12,6 @@ const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
 const addressInput = adForm.querySelector('#address');
 
-addressInput.readOnly = true;
 //Pristine
 
 const pristine = new Pristine(adForm, {
