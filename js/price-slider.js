@@ -24,7 +24,7 @@ noUiSlider.create(sliderElement, {
     min: DEFAULT_MIN_PRICE,
     max: 100000,
   },
-  start: 1000,
+  start: DEFAULT_MIN_PRICE,
   step: 1,
   connect: 'lower',
   format: {
