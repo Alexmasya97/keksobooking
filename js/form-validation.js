@@ -3,9 +3,12 @@ import {
   MAX_ACCOMODATION_PRICE,
   TYPES_ROOM,
   ROOM_OPTION,
-  ESC_BUTTON
+  ESC_BUTTON,
+  DEFAULT_MIN_PRICE
 } from './constant.js';
 import { sendData } from './api.js';
+import { sliderElement } from './price-slider.js';
+
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = document.querySelectorAll('.ad-form__element');
@@ -13,7 +16,6 @@ const mapFiltersForm = document.querySelector('.map__filters');
 const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
 const addressInput = adForm.querySelector('#address');
-const submitButton = adForm.querySelector('#submit')
 
 //Pristine
 
@@ -129,30 +131,32 @@ const activateForm = () => {
   activeState(mapFiltersFormElements);
 };
 
+const onMessageEscKeyDown = (element, evt) => {
+  if (ESC_BUTTON(evt)) {
+    evt.preventDefault();
+    element.remove();
+  }
+};
+
+const closeMessage = (element) => {
+  document.removeEventListener('keydown', onMessageEscKeyDown.bind(null, element));
+};
+
+const openMessage = (element) => {
+  document.addEventListener('keydown', onMessageEscKeyDown.bind(null, element));
+};
+
 const createMessage = (message) => {
   const messageTemplate = document.querySelector(`#${message}`).content.querySelector(`.${message}`);
   const element = messageTemplate.cloneNode(true);
   document.body.appendChild(element);
 
-  const onMessageEscKeyDown = (evt) => {
-
-    if (ESC_BUTTON(evt)) {
-      evt.preventDefault();
-      element.remove();
-      closeMessage();
-    }
-  };
-
-  const openMessage = () => document.addEventListener('keydown', onMessageEscKeyDown);
-  const closeMessage = () => document.removeEventListener('keydown', onMessageEscKeyDown);
-
-  openMessage();
+  openMessage(element);
 
   element.addEventListener('click', () => {
     element.remove();
-    closeMessage();
+    closeMessage(element);
   });
-
 };
 
 const userFormSubmit = (evt) => {
@@ -168,13 +172,14 @@ const userFormSubmit = (evt) => {
       new FormData(evt.target),
     );
   }
-}
+};
 
 adForm.addEventListener('reset', () => {
   adForm.reset();
+  sliderElement.noUiSlider.set(DEFAULT_MIN_PRICE);
 });
 
-adForm.addEventListener('submit', userFormSubmit)
+adForm.addEventListener('submit', userFormSubmit);
 
 export {
   diactivateForm,

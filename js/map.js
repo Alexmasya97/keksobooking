@@ -1,7 +1,7 @@
 import { createCustomPopup } from './util.js';
 import { diactivateForm, activateForm, addressInput } from './form-validation.js';
 import { getData } from './api.js';
-import { OFFERS_NUMBER } from './constant.js'
+import { OFFERS_NUMBER } from './constant.js';
 
 diactivateForm();
 
@@ -58,10 +58,10 @@ const createMarkers = (offers) => {
       lat,
       lng,
     },
-      {
-        draggable: false,
-        icon: pinIcon,
-      },
+    {
+      draggable: false,
+      icon: pinIcon,
+    },
     );
 
     marker

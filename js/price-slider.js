@@ -42,3 +42,4 @@ sliderElement.noUiSlider.on('update', () => {
 });
 
 
+export  { sliderElement };

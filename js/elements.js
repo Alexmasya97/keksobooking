@@ -1,7 +1,6 @@
 // const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 
-
 // .........................USELESS CODE. CAN DELETE????????
 
 

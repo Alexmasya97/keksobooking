@@ -38,13 +38,13 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail()
+        onFail();
       }
     })
     .catch(() => {
-      onFail()
-    })
-}
+      onFail();
+    });
+};
 export {
   getData,
   sendData
