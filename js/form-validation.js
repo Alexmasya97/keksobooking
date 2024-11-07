@@ -2,8 +2,10 @@
 import {
   MAX_ACCOMODATION_PRICE,
   TYPES_ROOM,
-  ROOM_OPTION
+  ROOM_OPTION,
+  ESC_BUTTON
 } from './constant.js';
+import { sendData } from './api.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = document.querySelectorAll('.ad-form__element');
@@ -11,6 +13,7 @@ const mapFiltersForm = document.querySelector('.map__filters');
 const mapFiltersFormElements = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFiltersFormFeatures = mapFiltersForm.querySelector('.map__features');
 const addressInput = adForm.querySelector('#address');
+const submitButton = adForm.querySelector('#submit')
 
 //Pristine
 
@@ -47,7 +50,6 @@ function validatePrice(value) {
 }
 
 function priceErrorMessage(value) {
-
   if (value > 100000) {
     return `Максимальная цена за ночь ${MAX_ACCOMODATION_PRICE}`;
   } else if (value < minPrice.getAttribute('min')) {
@@ -127,8 +129,56 @@ const activateForm = () => {
   activeState(mapFiltersFormElements);
 };
 
+const createMessage = (message) => {
+  const messageTemplate = document.querySelector(`#${message}`).content.querySelector(`.${message}`);
+  const element = messageTemplate.cloneNode(true);
+  document.body.appendChild(element);
+
+  const onMessageEscKeyDown = (evt) => {
+
+    if (ESC_BUTTON(evt)) {
+      evt.preventDefault();
+      element.remove();
+      closeMessage();
+    }
+  };
+
+  const openMessage = () => document.addEventListener('keydown', onMessageEscKeyDown);
+  const closeMessage = () => document.removeEventListener('keydown', onMessageEscKeyDown);
+
+  openMessage();
+
+  element.addEventListener('click', () => {
+    element.remove();
+    closeMessage();
+  });
+
+};
+
+const userFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid) {
+    sendData(
+      () => {
+        createMessage('success');
+        adForm.reset();
+      },
+      () => createMessage('error'),
+      new FormData(evt.target),
+    );
+  }
+}
+
+adForm.addEventListener('reset', () => {
+  adForm.reset();
+});
+
+adForm.addEventListener('submit', userFormSubmit)
+
 export {
   diactivateForm,
   activateForm,
-  addressInput
+  addressInput,
+  userFormSubmit
 };
