@@ -131,26 +131,24 @@ const activateForm = () => {
   activeState(mapFiltersFormElements);
 };
 
-const onMessageEscKeyDown = (element, evt) => {
-  if (ESC_BUTTON(evt)) {
-    evt.preventDefault();
-    element.remove();
-  }
-};
-
-const closeMessage = (element) => {
-  document.removeEventListener('keydown', onMessageEscKeyDown.bind(null, element));
-};
-
-const openMessage = (element) => {
-  document.addEventListener('keydown', onMessageEscKeyDown.bind(null, element));
-};
-
 const createMessage = (message) => {
   const messageTemplate = document.querySelector(`#${message}`).content.querySelector(`.${message}`);
   const element = messageTemplate.cloneNode(true);
   document.body.appendChild(element);
 
+  const onMessageEscKeyDown = (evt) => {
+    if (ESC_BUTTON(evt)) {
+      evt.preventDefault();
+      element.remove();
+    }
+  };
+  const closeMessage = () => {
+    document.removeEventListener('keydown', onMessageEscKeyDown);
+  };
+
+  const openMessage = () => {
+    document.addEventListener('keydown', onMessageEscKeyDown);
+  };
   openMessage(element);
 
   element.addEventListener('click', () => {
