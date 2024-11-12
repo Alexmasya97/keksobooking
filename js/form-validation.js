@@ -2,8 +2,13 @@
 import {
   MAX_ACCOMODATION_PRICE,
   TYPES_ROOM,
-  ROOM_OPTION
+  ROOM_OPTION,
+  ESC_BUTTON,
+  DEFAULT_MIN_PRICE
 } from './constant.js';
+import { sendData } from './api.js';
+import { sliderElement } from './price-slider.js';
+
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = document.querySelectorAll('.ad-form__element');
@@ -47,7 +52,6 @@ function validatePrice(value) {
 }
 
 function priceErrorMessage(value) {
-
   if (value > 100000) {
     return `Максимальная цена за ночь ${MAX_ACCOMODATION_PRICE}`;
   } else if (value < minPrice.getAttribute('min')) {
@@ -127,8 +131,57 @@ const activateForm = () => {
   activeState(mapFiltersFormElements);
 };
 
+const createMessage = (message) => {
+  const messageTemplate = document.querySelector(`#${message}`).content.querySelector(`.${message}`);
+  const element = messageTemplate.cloneNode(true);
+  document.body.appendChild(element);
+
+  const onMessageEscKeyDown = (evt) => {
+    if (ESC_BUTTON(evt)) {
+      evt.preventDefault();
+      element.remove();
+    }
+  };
+  const closeMessage = () => {
+    document.removeEventListener('keydown', onMessageEscKeyDown);
+  };
+
+  const openMessage = () => {
+    document.addEventListener('keydown', onMessageEscKeyDown);
+  };
+  openMessage(element);
+
+  element.addEventListener('click', () => {
+    element.remove();
+    closeMessage(element);
+  });
+};
+
+const userFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid) {
+    sendData(
+      () => {
+        createMessage('success');
+        adForm.reset();
+      },
+      () => createMessage('error'),
+      new FormData(evt.target),
+    );
+  }
+};
+
+adForm.addEventListener('reset', () => {
+  adForm.reset();
+  sliderElement.noUiSlider.set(DEFAULT_MIN_PRICE);
+});
+
+adForm.addEventListener('submit', userFormSubmit);
+
 export {
   diactivateForm,
   activateForm,
-  addressInput
+  addressInput,
+  userFormSubmit
 };

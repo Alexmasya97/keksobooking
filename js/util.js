@@ -1,3 +1,9 @@
+
+// CAN I DELETE  randomNumber,
+// getRandomFloat,
+// getRandomArrayElement,
+// generateRandomElementsArray,
+
 function randomNumber(numA, numB) {
   if (numA === numB) {
     throw Error('Ошибка: не задан диапазон');
@@ -42,11 +48,11 @@ function generateRandomElementsArray(possibleValues) {
   return Array.from(chosenElements);
 }
 
-const createCustomPopup = ({ offer, author }) => {
+const createCustomPopup = ({ offer, author, location }) => {
   const balloonTemplate = document.querySelector('#card').content.querySelector('.popup');
   const popupElement = balloonTemplate.cloneNode(true);
   popupElement.querySelector('.popup__title').textContent = offer.title;
-  popupElement.querySelector('.popup__text--address').textContent = `lat: ${offer.address.lat} и lng:${offer.address.lng}`;
+  popupElement.querySelector('.popup__text--address').textContent = `lat: ${location.lat.toFixed(5)} и lng:${location.lng.toFixed(5)}`;
   popupElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
   popupElement.querySelector('.popup__avatar').src = author.avatar;
 
