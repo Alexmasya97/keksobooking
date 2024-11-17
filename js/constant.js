@@ -26,11 +26,12 @@ const ROOM_OPTION = {
 const OFFERS_NUMBER = 10;
 const ESC_BUTTON = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
+
 export {
   MAX_ACCOMODATION_PRICE,
   DEFAULT_MIN_PRICE,
   TYPES_ROOM,
   ROOM_OPTION,
   OFFERS_NUMBER,
-  ESC_BUTTON,
+  ESC_BUTTON
 };

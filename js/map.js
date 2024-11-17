@@ -1,12 +1,9 @@
 import { createCustomPopup } from './util.js';
-import { diactivateForm, activateForm, addressInput } from './form-validation.js';
-import { getData } from './api.js';
+import { addressInput } from './form-validation.js';
 import { OFFERS_NUMBER } from './constant.js';
 
-diactivateForm();
-
 const map = L.map('map-canvas')
-  .on('load', () => { activateForm(); })
+  .on('load', () => { })
   .setView({
     lat: 35.6770,
     lng: 139.75024,
@@ -44,6 +41,7 @@ mainPinMarker.on('moveend', (evt) => {
   const lngValue = lng.toFixed(5);
   addressInput.value = `${latValue}, ${lngValue}`;
 });
+const markerGroup = L.layerGroup().addTo(map);
 
 const createMarkers = (offers) => {
   offers.slice(0, OFFERS_NUMBER).forEach(({ offer, author, location }) => {
@@ -65,9 +63,25 @@ const createMarkers = (offers) => {
     );
 
     marker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(createCustomPopup({ offer, author, location }));
+  },
+  {
+    keepInView: true, //карта автоматически перемещается, если всплывающий балун-объявление не помещается и вылезает за границы
+  },
+  );
+};
+
+const resetMap = () => {
+  markerGroup.clearLayers();
+  map.setView({
+    lat: 35.6770,
+    lng: 139.75024,
+  }, 13);
+  mainPinMarker.setLatLng({
+    lat: 35.6761,
+    lng: 139.75024,
   });
 };
-getData(createMarkers);
 
+export { resetMap, createMarkers, markerGroup };

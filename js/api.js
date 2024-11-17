@@ -1,8 +1,7 @@
 const GET_API_URL = 'https://25.javascript.htmlacademy.pro/keksobooking/data';
 const POST_API_URL = 'https://25.javascript.htmlacademy.pro/keksobooking';
 
-
-const getData = (onSuccess, onError) => {
+const getData = (onSuccess) => {
   fetch(GET_API_URL,
     {
       method: 'GET',
@@ -17,12 +16,7 @@ const getData = (onSuccess, onError) => {
     }
     )
     .then((offers) => {
-
       onSuccess(offers);
-
-    })
-    .catch((err) => {
-      onError(err);
     });
 };
 
@@ -40,11 +34,9 @@ const sendData = (onSuccess, onFail, body) => {
       } else {
         onFail();
       }
-    })
-    .catch(() => {
-      onFail();
     });
 };
+
 export {
   getData,
   sendData

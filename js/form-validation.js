@@ -6,9 +6,7 @@ import {
   ESC_BUTTON,
   DEFAULT_MIN_PRICE
 } from './constant.js';
-import { sendData } from './api.js';
 import { sliderElement } from './price-slider.js';
-
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = document.querySelectorAll('.ad-form__element');
@@ -23,8 +21,6 @@ const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
 });
-
-//Валидация заголовка
 
 function validateTitle(value) {
   return value.length >= 30 && value.length <= 100;
@@ -100,35 +96,26 @@ checkOut.addEventListener('change', () => {
   checkIn.value = checkOut.value;
 });
 
-adForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
-
 const diactivateForm = () => {
   adForm.classList.add('ad-form--disabled');
+  adFormElements.forEach((item) => item.setAttribute('disabled', 'disabled'));
   mapFiltersForm.classList.add('map__filters--disabled');
-  mapFiltersFormFeatures.setAttribute('disabled', '');
-  const inactiveState = (elements) => {
-    elements.forEach((item) => item.setAttribute('disabled', ''));
-  };
-
-  inactiveState(adFormElements);
-  inactiveState(mapFiltersFormElements);
+  mapFiltersFormElements.forEach((item) => item.setAttribute('disabled', 'disabled'));
+  mapFiltersFormFeatures.setAttribute('disabled', 'disabled');
 };
 
 const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
+  adFormElements.forEach((item) => item.removeAttribute('disabled', null));
   mapFiltersForm.classList.remove('map__filters--disabled');
+  mapFiltersFormElements.forEach((item) => item.removeAttribute('disabled', null));
   mapFiltersFormFeatures.removeAttribute('disabled');
+};
 
-  const activeState = (elements) => {
-    elements.forEach((item) => item.removeAttribute('disabled'));
-  };
-
-  activeState(adFormElements);
-  activeState(mapFiltersFormElements);
+const mapFilterChange = (cb) => {
+  mapFiltersForm.addEventListener('change', () => {
+    cb();
+  });
 };
 
 const createMessage = (message) => {
@@ -157,31 +144,19 @@ const createMessage = (message) => {
   });
 };
 
-const userFormSubmit = (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    sendData(
-      () => {
-        createMessage('success');
-        adForm.reset();
-      },
-      () => createMessage('error'),
-      new FormData(evt.target),
-    );
-  }
-};
-
-adForm.addEventListener('reset', () => {
+const resetForm = () => {
   adForm.reset();
   sliderElement.noUiSlider.set(DEFAULT_MIN_PRICE);
-});
-
-adForm.addEventListener('submit', userFormSubmit);
+};
 
 export {
   diactivateForm,
   activateForm,
   addressInput,
-  userFormSubmit
+  mapFilterChange,
+  resetForm,
+  adForm,
+  pristine,
+  createMessage
+
 };
